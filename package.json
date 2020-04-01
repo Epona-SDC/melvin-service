@@ -1,8 +1,8 @@
 {
-  "name": "caryn-service",
+  "name": "melvin-service",
   "version": "1.0.0",
   "description": "initial description and photo gallery",
-  "author": "Caryn Shu",
+  "author": "Melvin Viana",
   "engines": {
     "node": ">=6.13.0"
   },
