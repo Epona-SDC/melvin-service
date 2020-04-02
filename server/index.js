@@ -3,7 +3,6 @@ const app = express();
 const {getListing, Listing} = require('../database/index.js');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 app.use(cors());
 
 app.use(bodyParser.json());
@@ -64,7 +63,32 @@ app.delete('/api/intro/:listingId', (req, res) => {
 });
 
 // Put Request
-// app.put();
+app.put('/api/intro/:listingId', (req, res) => {
+
+  /** req.body - Shape:
+   * listingNumber: # => Udpates the number,
+   * photos: {type: 'remove/push', url:'stringUrl'} [object],
+   * title: 'NewTitleHere' [string],
+   * description: 'NewDescriptionHere'  [string]
+   */
+  const listingNumber = parseInt(req.params.listingId);
+  const {photos} = req.body;
+  if (!photos) {
+    Listing.updateOne({ 'listingNumber': listingNumber},
+      req.body)
+      .exec()
+      .then((result) => {
+        res.send(result);
+        res.status(200);
+      })
+      .catch((err) => {
+        res.send(err);
+        res.status(500);
+      });
+  } else {
+    res.end();
+  }
+});
 
 let port = 3002;
 app.listen(port, function() {
