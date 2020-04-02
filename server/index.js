@@ -49,13 +49,7 @@ app.post('/api/intro/', (req, res) => {
 
 // Put Request
 
-app.get('/app.js', cors(), function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/public/dist/app.js'));
-});
-
 let port = 3002;
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
 });
-
-
