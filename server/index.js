@@ -1,3 +1,4 @@
+/* global require */
 const express = require('express');
 const app = express();
 const {getListing, Listing} = require('../database/index.js');
@@ -7,10 +8,11 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+// eslint-disable-next-line no-undef
 app.use(express.static(__dirname + '/../client/public/dist'));
 
-app.get('/api/intro/:id', function (req, res) {
-  var id = req.params.id;
+app.get('/api/intro/:listingId', function (req, res) {
+  var id = req.params.listingId;
   getListing(id, function(err, result) {
     if (err) {
       console.log('fail to get intro');
@@ -25,7 +27,7 @@ app.post('/api/intro/', (req, res) => {
   /**
    * Schema for db.listings():
    * {
-   *    listing: Number,
+   *    listingNumber: Number,
    *    photos: array(5 to 6, urlStrings), // 0 - 6.
    *    title: String,
    *    description: String
@@ -63,16 +65,23 @@ app.delete('/api/intro/:listingId', (req, res) => {
 });
 
 // Put Request
+/**
+ * @param listingId
+ * Updates any or all of the following fields:
+ *  1. photos
+ *  2. title
+ *  3. description
+ */
 app.put('/api/intro/:listingId', (req, res) => {
 
-  /** req.body - Shape:
-   * listingNumber: # => Udpates the number,
-   * photos: {type: 'remove/push', url:'stringUrl'} [object],
-   * title: 'NewTitleHere' [string],
-   * description: 'NewDescriptionHere'  [string]
-   */
   const listingNumber = parseInt(req.params.listingId);
-  const {photos} = req.body;
+  const {photos, ...restOfdata} = req.body;
+
+  if (req.body.listingNumber) {
+    res.send("ListingNumber cannot be updated");
+    res.status(400);
+  }
+
   if (!photos) {
     Listing.updateOne({ 'listingNumber': listingNumber},
       req.body)
@@ -86,8 +95,32 @@ app.put('/api/intro/:listingId', (req, res) => {
         res.status(500);
       });
   } else {
-    res.end();
-  }
+    if (photos.type  === "add") {
+      Listing.updateOne({ 'listingNumber': listingNumber},
+        {$set:restOfdata, "$addToSet":{"photos": photos.url}})
+        .exec()
+        .then((result) => {
+          res.send(result);
+          res.status(200);
+        })
+        .catch((err) => {
+          res.send(err);
+          res.status(500);
+        });
+      } else if (photos.type==='remove'){
+        Listing.updateOne({ 'listingNumber': listingNumber},
+          {$set:{restOfdata}, $pull:{"photos": photos.url}})
+          .exec()
+          .then((result) => {
+            res.send(result);
+            res.status(200);
+          })
+          .catch((err) => {
+            res.send(err);
+            res.status(500);
+          });
+      }
+    }
 });
 
 let port = 3002;
