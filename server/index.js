@@ -46,8 +46,25 @@ app.post('/api/intro/', (req, res) => {
 });
 
 // Delete Request
+/**
+ * @param listingID - listingId used to find documents
+ * Delete listing
+ */
+app.delete('/api/intro/:listingId', (req, res) => {
+  Listing.deleteOne({ listingId: req.params.listingID})
+    .exec()
+    .then((result) =>{
+      res.send(result);
+      res.status(200);
+    })
+    .catch((err) => {
+      res.send(err);
+      res.status(500);
+    });
+});
 
 // Put Request
+// app.put();
 
 let port = 3002;
 app.listen(port, function() {
