@@ -2,7 +2,6 @@ const { Pool } = require('pg');
 const pgtools = require('pgtools');
 const {lorem:{ sentence, paragraph }, image, random} = require('faker');
 const {  postgresUsername, postgresPassword } = require('../config/index.js')
-console.log(postgresPassword);
 
 const config = {
   user: postgresUsername,
