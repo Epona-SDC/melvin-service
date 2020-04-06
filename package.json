@@ -31,8 +31,6 @@
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.4",
     "nodemon": "^2.0.2",
-    "pg": "^8.0.0",
-    "pgtools": "^0.3.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-styleable": "^3.3.2",
