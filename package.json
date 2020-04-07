@@ -11,7 +11,8 @@
     "build": "webpack --config webpack.prod.js",
     "server": "node server/index.js",
     "seed": "node database/seed.js",
-    "test": "jest"
+    "test": "jest",
+    "build-data":"node database/dataScript.js"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
