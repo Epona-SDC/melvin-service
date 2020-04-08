@@ -28,28 +28,33 @@ const getRandomPhotos = () => {
   return photoUrls;
 }
 
-
-const generate100000 = (index) => {
+const generateHundredThousand = (index) => {
   const records = [];
-  for (let i = 1*index; i <= 100000*index; i++) {
+  for (let i = 1; i <= 1000000; i++) {
+    var listingNumber = index === 1 ? i : ((index - 1) * 1000000) + i;
+    // console.log(i);
     records.push({
-      listingNumber: i, title: sentence(), description: paragraph(),
+      listingNumber, title: sentence(), description: paragraph(),
       photos: getRandomPhotos()
     })
   }
   return records;
 }
-console.time('generation100000-' +index)
-console.timeLog('generation100000-' +index)
-const records = generate100000();
+console.time('generateHundredThousand-' +index)
+console.timeLog('generateHundredThousand-' +index)
+const lists = generateHundredThousand(index);
 
-csvWriter.writeRecords(records)       // returns a promise
+ return csvWriter.writeRecords(lists)       // returns a promise
     .then(() => {
-        console.log('...Done');
-        console.timeEnd('generation100000-' +index)
+        console.timeEnd('generateHundredThousand-' +index)
       });
 }
-
-for (let i = 1; i <= 100; i++) {
-  createNewListing(i);
+const getData = async () =>{
+  for (let i = 1 ; i <= 10 ; i++) {
+    await createNewListing(i);
+  }
 }
+getData()
+  .then(() => {
+    console.log('10 CSV files populated');
+  })
