@@ -16,19 +16,24 @@ const csvWriter = createCsvWriter({
       {id: 'title', title: 'title'},
       {id: 'description', title: 'description'},
       {id: 'photos', title: 'photos'},
-  ]
+  ],
+  fieldDelimiter: ';'
 });
 
 const randomNum = () => random.number({min:0, max:6});
 const getRandomPhotos = () => {
-  const photoUrls = []
+  let photoUrls = "{"
   for (let i = 0, len = randomNum(); i < len ; i += 1){
-    photoUrls.push(`"${image.imageUrl()}"`);
+    photoUrls+= image.imageUrl();
+    if (i !== len -1) {
+      photoUrls+= ","
+    }
   }
+  photoUrls += "}";
   return photoUrls;
 }
 
-const generateHundredThousand = (index) => {
+const generateOneMillion = (index) => {
   const records = [];
   for (let i = 1; i <= 1000000; i++) {
     var listingNumber = index === 1 ? i : ((index - 1) * 1000000) + i;
@@ -40,13 +45,13 @@ const generateHundredThousand = (index) => {
   }
   return records;
 }
-console.time('generateHundredThousand-' +index)
-console.timeLog('generateHundredThousand-' +index)
-const lists = generateHundredThousand(index);
+console.time('generateOneMillion-' +index)
+console.timeLog('generateOneMillion-' +index)
+const lists = generateOneMillion(index);
 
  return csvWriter.writeRecords(lists)       // returns a promise
     .then(() => {
-        console.timeEnd('generateHundredThousand-' +index)
+        console.timeEnd('generateOneMillion-' +index)
       });
 }
 const getData = async () =>{
