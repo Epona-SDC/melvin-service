@@ -17,11 +17,11 @@ module.exports.dbConnection = dbConnection;
 module.exports.getListing = (req,res) => {
   console.time('query');
   console.timeLog('query');
-  dbConnection.query('SELECT * from listings where listingNumber=$1',[req.params.listingId])
+  dbConnection.query('SELECT photos.photos, listings.title, listings.description from listings, photos where listings.listingNumber=$1 and photos.listingnumber=$1',[req.params.listingId])
     .then(data=>{
       res.send(data.rows[0]);
       console.timeEnd('query');
-
+      console.log('Get request received: ', req.params.listingId);
       res.status(200);
     })
     .catch((err)=> {
@@ -35,15 +35,12 @@ module.exports.getListing = (req,res) => {
 module.exports.createListing = (req, res) => {
  // Validate input?
   // Needs title, description
+  const photos = req.body.photos.toString('');
 
-  dbConnection.query('SELECT listingNumber from listings ORDER BY listingNumber DESC LIMIT 1').then(
+  dbConnection.query(`WITH listing_insert as (insert into listings(title,description) values ('${req.body.title}', '${req.body.description}')
+  RETURNING listingNumber) Insert into photos (listingnumber, photos) values ( (select listingnumber from listing_insert), '{${photos}}')`).then(
     data=>console.log(data.rows)
   )
   // executeQuery('INSERT INTO listings (title, description) VALUES ()')
 
 }
-
-// module.exports.seedData = () => {
-//   return dbConnection.connect()
-//   .then()
-// }
