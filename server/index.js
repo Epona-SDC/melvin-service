@@ -14,29 +14,6 @@ app.use(express.static(__dirname + '/../client/public/dist'));
 app.get('/api/intro/:listingId', getListing);
 
 app.post('/api/intro/', createListing);
-// // POST Request - Adds a record to
-// app.post('/api/intro/', (req, res) => {
-//   /**
-//    * Schema for db.listings():
-//    * {
-//    *    listingNumber: Number,
-//    *    photos: array(5 to 6, urlStrings), // 0 - 6.
-//    *    title: String,
-//    *    description: String
-//    * }
-//    *
-//    */
-
-//   Listing.create(req.body)
-//     .then((result) => {
-//       res.send(result);
-//       res.status(200);
-//     })
-//     .catch((err) => {
-//       res.send(err);
-//       res.status(500);
-//     });
-// });
 
 // // Delete Request
 // /**
