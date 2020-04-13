@@ -1,39 +1,90 @@
-# Project Name
+# Intro Service
 
-> Project description
+> Intro Component
 
-## Related Projects
+# Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
 
-## Table of Contents
+# Table of Contents
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+1. [Getting Started](#getting-started)
+1. [Prerequesites](#prerequesites)
+1. [Installation](#installation)
+1. [Usage](#usage)
+1. [License](#license)
+1. [Tech Framework used](#tech-framework-used)
 
-## Usage
+# Getting Started
+These are the steps to get up and running with my service :+1:
 
-> Some usage instructions
+# Prerequesites
+Make sure you have installed the following prerequesites on your development machine:
+* Git - [Download & Install Git](https://git-scm.com/downloads). OSX and Linux machines typically have this already installed.
+* Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager. If you encounter any problems, you can also use this [GitHub Gist](https://gist.github.com/isaacs/579814) to install Node.js.
+* postgreSQL server - Installation docs for: [macOS](https://dev.mysql.com/doc/mysql-osx-excerpt/5.7/en/osx-installation-pkg.html), [Windows](https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html), for [WSL - Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
+* Make sure PostgreSQL server is running -
 
-## Requirements
+## Installation
+* Clone repository
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
+`git clone https://github.com/Epona-SDC/melvin-service.git`
 
-- Node 6.13.0
-- etc
+* Install dependencies
 
-## Development
+`npm install`
 
-### Installing Dependencies
+# Usage
+* Create index.js in the config directory
+  * In your config/index.js add the following code, with your own credentials:
 
-From within the root directory:
+  ```javascript
+  module.exports = {
+    postgresPassword: `yourPassword`,
+    postgresUserName: `userName`,
+  };
+  ```
+  * Once your credentials are in this config file you can proceed to the next step.
 
-```sh
-npm install -g webpack
-npm install
-```
+* Run csv data builder
+
+  `npm run build-data`
+
+* Create database
+`npm run create-db`
+
+* Import data on postgreSQL CLI
+ 1. From the project's directory change current folder database/data
+ `cd database/data`
+ 1. Open postgres CLI
+ `sudo -u postgres psql`
+ 1. Open airbnblisting database
+ `\c airbnblisting`
+ 1. Enter the following statement to postgres CLI, and import listing1 - listing10 csv files
+ 
+  `\copy listings (title,description) from './listing1.csv' HEADER CSV;`
+  
+ 5. Enter Copy statement on postgres CLI, and import photos1 - photos10
+ 
+  `\copy photos (listingNumber,photos) from './photos1.csv' DELIMITER ';' HEADER CSV;`
+
+* Build webpack bundle
+
+  `npm run build`
+
+* Start express server
+
+  `npm run server`
+
+The service will then run on http://localhost:3002. Bundle.js file should also be in http://localhost:3002/bundle.js
+
+### Testing w/ Artillery
+- Needs Readme for Artillery usage- See Enhancement [Issue](https://github.com/Epona-SDC/melvin-service/issues/7)
+
+# Tech Framework Used
+* React
+* Express
+* postgreSQL
+* Jest
+* webpack
+* Artillery
 
