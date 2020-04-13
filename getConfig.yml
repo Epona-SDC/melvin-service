@@ -1,0 +1,21 @@
+config:
+  target: 'http://localhost:3002'
+  phases:
+    - duration: 10
+      arrivalRate: 1000
+      name: '1000/sec for 10s'
+    - duration: 3
+      arrivalRate: 10000
+      name: '10000/sec for 3s'
+    - duration: 3
+      arrivalRate: 100000
+      name: '10000/sec for 3s'
+  variables:
+    listingNumber:
+      - "10000000"
+      - "9999999"
+      - "9000000"
+scenarios:
+  - flow:
+    - get:
+        url: "/api/intro/{{listingNumber}}"
