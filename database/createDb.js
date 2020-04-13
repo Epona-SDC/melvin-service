@@ -29,6 +29,10 @@ createDB()
   })
   .then(()=>{
     console.log('photos table created');
+    return dbConnection.query('CREATE INDEX listing_num_photos on photos(listingNumber)')
+  })
+  .then(() => {
+    console.log('Index for photos table created')
   })
   .catch((err) =>{
     console.error(err);
