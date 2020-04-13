@@ -1,0 +1,13 @@
+config:
+  target: 'http://localhost:3002'
+  phases:
+    - duration: 10
+      arrivalRate: 1000
+      name: '1000/sec for 10s'
+scenarios:
+  - flow:
+    - post:
+        url: "/api/intro"
+        headers:
+          Content-Type: "application/json"
+        body: '{"photos": ["https://picsum.photos/200/300","https://picsum.photos/200/300","https://picsum.photos/200/300","https://picsum.photos/200/300","https://picsum.photos/200/300","https://picsum.photos/200/300"], "title": "New Place", "description": "A nice big place"}'
