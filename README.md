@@ -27,7 +27,7 @@ Make sure you have installed the following prerequesites on your development mac
 ## Installation
 * Clone repository
 
-`git clone https://github.com/Eponaaaa/service-Epona-melvin.git`
+`git clone https://github.com/Epona-SDC/melvin-service.git`
 
 * Install dependencies
 
