@@ -15,7 +15,7 @@ class App extends React.Component {
     let endPoint = window.location.href.split('=')[1];
     $.ajax({
       method: 'GET',
-      url: `http://3.101.45.223:3002/api/intro/${endPoint}`,
+      url: `http://localhost:3002/api/intro/${endPoint}`,
       success: function(data) {
         this.setState({
           intro: data
