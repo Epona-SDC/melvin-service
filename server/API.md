@@ -6,8 +6,6 @@ All of the Requests are use with `http://localhost:3002`.
 # Table Of Contents:
 1. Get Listing - [GET](#get-listing)
 2. Create Listing - [POST](#create-listing)
-3. Delete Listing - [DELETE](#delete-listing)
-4. Update Listing - [PUT](#update-listing)
 
 ## Get Listing
 
@@ -19,7 +17,6 @@ Fetches listing data from the database with listingId.
 
 The following is an example of the data output:
 ```javascript
-  [
     {
       "photos": [
           "https://picsum.photos/200/300",
@@ -29,13 +26,9 @@ The following is an example of the data output:
           "https://picsum.photos/200/300",
           "https://picsum.photos/200/300"
       ],
-      "_id": "5e8549a9927b2e0834d8457b",
-      "listingNumber": 1,
       "title": "New Place",
       "description": "A nice big place",
-      "__v": 0
     }
-  ]
 ```
 
 ## Create Listing
@@ -46,56 +39,11 @@ API Endpoint : `/api/intro/:listingId`
 
 All of the following fields are required:
 * **photos** - Array
-* **listingNumber** - Number
 * **title** - String
 * **description** - String
 
-## Delete Listing
+- All data is required, photos array can be empty. Front end data does not cover this case, so it's safe to assume that a photos array has 4 - 6 url strings.
 
-> DELETE request for listing data
-
-API Endpoint : `/api/intro/:listingId`
-
-Deletes entire row with the given listingId.
-
-## Put Listing
-
-> PUT request for listing data
-
-API Endpoint : `/api/intro/:listingId`
-
-Updates certain fields depending on what is sent to the server.
-
-### Data Shape of req.body
-Required Data Shape of each field in req.body:
-  * **photos** - (Object) Takes in an object with two required properties:
-    1. **type** - (String) Which is either 'remove' or 'add'
-    1. **url** - (String) The url that is removed or added to database record.
-
-    Example of removing a photo:
-    ```javascript
-    {
-      "photos": {"type": "remove", "url" : "https://picsum.photos/200/300"}
-    }
-    ```
-
-     Example of adding a photo:
-    ```javascript
-    {
-      "photos": {"type": "remove", "url" : "https://picsum.photos/200/300"}
-    }
-    ```
-  * **title** - (String) Updates title
-    ```javascript
-      {
-        "title" : "New title here"
-      }
-    ```
-  * **description** - (String) Updates the description
-     ```javascript
-      {
-        "description" : "New description here"
-      }
-      ```
+- Validation for each field is not added yet: [Will be implemented](https://github.com/Epona-SDC/melvin-service/issues/6)
 
   <span style="color:red">*User should not be able to update listingNumber*</span>
