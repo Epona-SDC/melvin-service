@@ -29,10 +29,10 @@ const generatePhotos = (index) => {
   ],
   fieldDelimiter: ';'
   });
-  const generateOneMillion = (index) => {
+  const generateOneHundredThousand = (index) => {
     const records = [];
-    for (let i = 1; i <= 1000000; i++) {
-      var listingNumber = index === 1 ? i : ((index - 1) * 1000000) + i;
+    for (let i = 1; i <= 100000; i++) {
+      var listingNumber = index === 1 ? i : ((index - 1) * 100000) + i;
       // console.log(i);
       records.push({
         listingNumber, photos:getRandomPhotos(),
@@ -41,12 +41,12 @@ const generatePhotos = (index) => {
     return records;
   }
 
-  const photos = generateOneMillion(index);
-  console.time('generateOneMillionPhotos-' +index)
-  console.timeLog('generateOneMillionPhotos-' +index, '- Start')
+  const photos = generateOneHundredThousand(index);
+  console.time('generateOneHundredThousandPhotos-' +index)
+  console.timeLog('generateOneHundredThousandPhotos-' +index, '- Start')
   return csvWriter.writeRecords(photos)       // returns a promise
 .then(() => {
-    console.timeEnd('generateOneMillionPhotos-' +index, '- End')
+    console.timeEnd('generateOneHundredThousandPhotos-' +index, '- End')
   });
 
 }
@@ -86,6 +86,9 @@ const lists = generateOneMillion(index);
 const getData = async () =>{
   for (let i = 1 ; i <= 10 ; i++) {
     await createNewListing(i);
+    await generatePhotos(i);
+  }
+  for (let i = 11; i <= 20; i++) {
     await generatePhotos(i);
   }
 }
