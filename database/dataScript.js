@@ -5,11 +5,11 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 //100 times
 
-const randomNum = () => random.number({min:0, max:6});
+const randomNum = () => random.number({min:5, max:6});
 const getRandomPhotos = () => {
   let photoUrls = "{"
   for (let i = 0, len = randomNum(); i < len ; i += 1){
-    photoUrls+= image.imageUrl();
+    photoUrls+= 'https://imagebucketsdc.s3-us-west-1.amazonaws.com/' + random.number({min:1, max:30}) + '.jpg';
     if (i !== len -1) {
       photoUrls+= ","
     }
