@@ -29,10 +29,10 @@ const generatePhotos = (index) => {
   ],
   fieldDelimiter: ';'
   });
-  const generateOneHundredThousand = (index) => {
+  const generateFourHundredThousand = (index) => {
     const records = [];
-    for (let i = 1; i <= 100000; i++) {
-      var listingNumber = index === 1 ? i : ((index - 1) * 100000) + i;
+    for (let i = 1; i <= 400000; i++) {
+      var listingNumber = index === 1 ? i : ((index - 1) * 400000) + i;
       // console.log(i);
       records.push({
         listingNumber, photos:getRandomPhotos(),
@@ -41,12 +41,12 @@ const generatePhotos = (index) => {
     return records;
   }
 
-  const photos = generateOneHundredThousand(index);
-  console.time('generateOneHundredThousandPhotos-' +index)
-  console.timeLog('generateOneHundredThousandPhotos-' +index, '- Start')
+  const photos = generateFourHundredThousand(index);
+  console.time('generateFourHundredThousandPhotos-' +index)
+  console.timeLog('generateFourHundredThousandPhotos-' +index, '- Start')
   return csvWriter.writeRecords(photos)       // returns a promise
 .then(() => {
-    console.timeEnd('generateOneHundredThousandPhotos-' +index, '- End')
+    console.timeEnd('generateFourHundredThousandPhotos-' +index, '- End')
   });
 
 }
@@ -87,13 +87,13 @@ const getData = async () =>{
   for (let i = 1 ; i <= 10 ; i++) {
     await createNewListing(i);
   }
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 25; i++) {
     await generatePhotos(i);
   }
 }
 getData()
   .then(() => {
     console.log('10 listings CSV files populated');
-    console.log('100 photos CSV files populated');
+    console.log('25 photos CSV files populated');
 
   })
