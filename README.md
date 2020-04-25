@@ -1,6 +1,6 @@
 # Intro Service
 
-> Intro Component
+> Introduction Service to BnB
 
 # Related Projects
 
