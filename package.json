@@ -35,7 +35,7 @@
     "grunt-contrib-uglify": "^4.0.1",
     "jest": "^25.1.0",
     "jest-css-modules": "^2.1.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.4",
     "newrelic": "^6.5.0",
